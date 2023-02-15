@@ -1,0 +1,32 @@
+<%= form_with(model: member) do |form| %>
+  <% if member.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(member.errors.count, "error") %> prohibited this member from being saved:</h2>
+
+      <ul>
+        <% member.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :discord_id, style: "display: block" %>
+    <%= form.number_field :discord_id %>
+  </div>
+
+  <div>
+    <%= form.label :display_name, style: "display: block" %>
+    <%= form.text_field :display_name %>
+  </div>
+
+  <div>
+    <%= form.label :nickname, style: "display: block" %>
+    <%= form.text_field :nickname %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
