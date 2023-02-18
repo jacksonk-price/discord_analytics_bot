@@ -26,12 +26,12 @@ class DiscordBot
   end
 
   def on_voice_update(event)
-    if event.old_channel.nil? && !event.channel.nil?
-      # user joins channel
-      puts "User #{event.user.name} joined voice channel #{event.channel.name} at #{DateTime.now}"
-    elsif !event.old_channel.nil? && event.channel.nil?
-      # user leaves channel
-      puts "User #{event.user.name} left voice channel #{event.old_channel.name} at #{DateTime.now}"
+    if voice_join?(event)
+      db_member = get_member_from_user(event.user)
+      db_channel = get_channel_from_event(event)
+      puts "Member #{db_member.display_name} joined voice channel #{db_channel.name} at #{DateTime.now} and session id is #{event.session_id}"
+    elsif voice_leave?(event)
+      puts "User #{event.user.name} left voice channel #{event.old_channel.name} at #{DateTime.now} and session id is #{event.session_id}"
     end
   end
 end

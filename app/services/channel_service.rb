@@ -25,4 +25,17 @@ module ChannelService
       puts 'No new channels found.'.green
     end
   end
+
+  def get_channel_from_event(event)
+    discord_id = event.channel.id
+    Channel.find_by(discord_id: discord_id)
+  end
+
+  def voice_join?(event)
+    event.old_channel.nil? && event.channel.present?
+  end
+
+  def voice_leave?(event)
+    event.old_channel.present? && event.channel.nil?
+  end
 end

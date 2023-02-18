@@ -23,4 +23,9 @@ module MemberService
       puts 'No new members found.'.green
     end
   end
+
+  def get_member_from_user(user)
+    member = @server.member(user)
+    Member.find_by(discord_id: member.id)
+  end
 end
