@@ -3,6 +3,7 @@ class DiscordBot
   Dir["/services/*.rb"].each {|file| require_relative file }
   include ChannelService
   include MemberService
+  include MemberVoiceSessionService
   def initialize
     @bot = Discordrb::Bot.new token: Rails.application.credentials.dig(:discord, :token)
     @server = @bot.server(669719500504956958)
@@ -27,11 +28,17 @@ class DiscordBot
 
   def on_voice_update(event)
     if voice_join?(event)
-      db_member = get_member_from_user(event.user)
-      db_channel = get_channel_from_event(event)
-      puts "Member #{db_member.display_name} joined voice channel #{db_channel.name} at #{DateTime.now} and session id is #{event.session_id}"
+      if save_voice_session(event)
+        puts "Voice session created and saved".blue
+      else
+        puts 'Tried to save voice session join, but something went wrong.'.red
+      end
     elsif voice_leave?(event)
-      puts "User #{event.user.name} left voice channel #{event.old_channel.name} at #{DateTime.now} and session id is #{event.session_id}"
+      if update_voice_session(event)
+        puts 'Voice session updated'.blue
+      else
+        puts 'Tried to update voice session leave, but something went wrong.'.red
+      end
     end
   end
 end

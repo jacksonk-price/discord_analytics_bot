@@ -4,12 +4,12 @@ module MemberService
   end
 
   def save_new_members
-    members = @server.members
+    discord_members = @server.members
 
-    current_members_count = members.count
-    saved_members_count = Member.all.count
+    discord_members_count = discord_members.count
+    db_members_count = Member.all.count
 
-    if saved_members_count < current_members_count
+    if db_members_count < discord_members_count
       members.each do |member|
         next if Member.find_by(discord_id: member.id)
         puts 'New member found... persisting to database.'.yellow
@@ -25,7 +25,7 @@ module MemberService
   end
 
   def get_member_from_user(user)
-    member = @server.member(user)
-    Member.find_by(discord_id: member.id)
+    discord_member = @server.member(user)
+    Member.find_by(discord_id: discord_member.id)
   end
 end
