@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_18_192134) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_18_221944) do
   create_table "channels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.bigint "discord_id"
@@ -22,11 +22,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_18_192134) do
   create_table "member_voice_sessions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "member_id", null: false
     t.bigint "channel_id", null: false
-    t.bigint "discord_session_id"
+    t.string "discord_session_id"
     t.datetime "time_joined"
     t.datetime "time_left"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.index ["channel_id"], name: "index_member_voice_sessions_on_channel_id"
     t.index ["member_id"], name: "index_member_voice_sessions_on_member_id"
   end

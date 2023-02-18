@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'dashboard/index'
   resources :member_voice_sessions
   resources :channels
   get 'bot_settings/index'
