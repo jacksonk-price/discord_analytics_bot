@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Member voice sessions</h1>
+
+<div id="member_voice_sessions">
+  <% @member_voice_sessions.each do |member_voice_session| %>
+    <%= render member_voice_session %>
+    <p>
+      <%= link_to "Show this member voice session", member_voice_session %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New member voice session", new_member_voice_session_path %>

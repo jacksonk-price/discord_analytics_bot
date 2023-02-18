@@ -1,0 +1,2 @@
+module MemberVoiceSessionsHelper
+end

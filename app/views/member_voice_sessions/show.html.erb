@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @member_voice_session %>
+
+<div>
+  <%= link_to "Edit this member voice session", edit_member_voice_session_path(@member_voice_session) %> |
+  <%= link_to "Back to member voice sessions", member_voice_sessions_path %>
+
+  <%= button_to "Destroy this member voice session", @member_voice_session, method: :delete %>
+</div>
