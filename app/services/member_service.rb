@@ -1,27 +1,14 @@
 module MemberService
-  def save_server_member(member)
-    Member.create(discord_id: member.id, display_name: member.display_name)
+  def save_new_members
+    new_members.each { |new_member| Member.create!(discord_id: new_member.id, display_name: new_member.display_name) }
   end
 
-  def save_new_members
-    discord_members = @server.members
+  def new_members
+    @server.members.select { |member| member_ids.exclude?(member.id) }
+  end
 
-    discord_members_count = discord_members.count
-    db_members_count = Member.all.count
-
-    if db_members_count < discord_members_count
-      members.each do |member|
-        next if Member.find_by(discord_id: member.id)
-        puts 'New member found... persisting to database.'.yellow
-        if save_server_member(member)
-          puts "#{member.display_name} has been saved".green
-        else
-          puts 'There was an error saving the new member.'.red
-        end
-      end
-    else
-      puts 'No new members found.'.green
-    end
+  def member_ids
+    @member_ids ||= Member.pluck(:discord_id)
   end
 
   def get_member_from_user(user)
