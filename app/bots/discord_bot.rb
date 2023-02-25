@@ -1,12 +1,7 @@
 class DiscordBot
-  require 'discordrb'
-  Dir["/services/*.rb"].each {|file| require_relative file }
-  include ChannelService
-  include MemberService
-  include MemberVoiceSessionService
   def initialize
     @bot = Discordrb::Bot.new token: Rails.application.credentials.dig(:discord, :token)
-    @server = @bot.server(669719500504956958)
+    @server =
     add_listeners
   end
 

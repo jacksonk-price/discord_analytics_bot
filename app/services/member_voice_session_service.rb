@@ -11,6 +11,18 @@ module MemberVoiceSessionService
     unless voice_session.nil?
       voice_session.update(time_left: DateTime.now)
     end
+
+    voice_session = MemberVoiceSession.find_by(discord_session_id: event.session_id)
+    return unless voice_session
+
+    voice_session.update(time_left: DateTime.now)
+  end
+
+  def update_voice_session(event)
+    voice_session = MemberVoiceSession.find_by(discord_session_id: event.session_id)
+    return unless voice_session
+
+    voice_session.update(time_left: DateTime.now)
   end
 
   def voice_join?(event)
